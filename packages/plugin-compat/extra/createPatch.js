@@ -1,17 +1,22 @@
 const {readFileSync,writeFileSync} = require(`fs`);
 const {brotliCompressSync} = require(`zlib`);
 
-const patchContent = readFileSync(process.argv[2]);
-const patchEncoded = brotliCompressSync(patchContent).toString(`base64`);
+exports.main = main;
+function main(patchPath, jsFile) {
+  const patchContent = readFileSync(patchPath);
+  const patchEncoded = brotliCompressSync(patchContent).toString(`base64`);
 
-const jsFile = process.argv[3];
+  writeFileSync(jsFile, `let patch: string;
 
-writeFileSync(jsFile, `let patch: string;
+  export function getPatch() {
+    if (typeof patch === \`undefined\`)
+      patch = require(\`zlib\`).brotliDecompressSync(Buffer.from(\`${patchEncoded}\`, \`base64\`)).toString();
 
-export function getPatch() {
-  if (typeof patch === \`undefined\`)
-    patch = require(\`zlib\`).brotliDecompressSync(Buffer.from(\`${patchEncoded}\`, \`base64\`)).toString();
-
-  return patch;
+    return patch;
+  }
+  `);
 }
-`);
+
+if(process.mainModule === module) {
+  createPatch(process.argv[2], process.argv[3]);
+}

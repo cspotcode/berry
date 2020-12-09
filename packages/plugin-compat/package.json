@@ -8,6 +8,7 @@
     "@yarnpkg/plugin-patch": "^2.1.2"
   },
   "devDependencies": {
+    "@types/cross-spawn": "6.0.0",
     "@types/resolve": "^1.17.1",
     "@yarnpkg/cli": "workspace:^2.4.0",
     "@yarnpkg/core": "workspace:^2.4.0",
@@ -15,7 +16,9 @@
     "@yarnpkg/monorepo": "workspace:0.0.0",
     "@yarnpkg/plugin-npm": "workspace:^2.4.0",
     "@yarnpkg/plugin-patch": "workspace:^2.1.2",
-    "resolve": "^1.17.0"
+    "cross-spawn": "7.0.3",
+    "resolve": "^1.17.0",
+    "tslib": "^1.13.0"
   },
   "repository": {
     "type": "git",
@@ -25,6 +28,7 @@
     "postpack": "rm -rf lib",
     "prepack": "run build:compile \"$(pwd)\"",
     "test:plugin-compat": "run test:unit --config \"$(pwd)/jest.config.js\"",
+    "gen-typescript-patch": "node -r @yarnpkg/monorepo/scripts/setup-ts-execution extra/typescript/gen-typescript-patch.ts",
     "debug-patch": "node -r @yarnpkg/monorepo/scripts/setup-ts-execution extra/debugPatch \"$INIT_CWD\""
   },
   "publishConfig": {
