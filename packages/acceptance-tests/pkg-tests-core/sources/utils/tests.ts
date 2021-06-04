@@ -3,7 +3,6 @@ import crypto                            from 'crypto';
 import finalhandler                      from 'finalhandler';
 import https                             from 'https';
 import http                              from 'http';
-
 import {IncomingMessage, ServerResponse} from 'http';
 import invariant                         from 'invariant';
 import {AddressInfo}                     from 'net';
@@ -677,7 +676,7 @@ export const getHttpsCertificates = async () => {
     csr: serverCSRResult.csr,
     clientKey: serverCSRResult.clientKey,
     serviceKey: caCertificate.clientKey,
-    serviceCertificate:  caCertificate.certificate,
+    serviceCertificate: caCertificate.certificate,
     days: 365,
   });
 
